@@ -1,0 +1,458 @@
+/* Variables de colores épicos */
+:root {
+    --primary-blue: #1e3a8a;
+    --secondary-blue: #3b82f6;
+    --light-blue: #dbeafe;
+    --primary-red: #dc2626;
+    --secondary-red: #ef4444;
+    --light-red: #fee2e2;
+    --gold: #f59e0b;
+    --light-gold: #fef3c7;
+    --dark-gray: #1f2937;
+    --medium-gray: #6b7280;
+    --light-gray: #f3f4f6;
+    --white: #ffffff;
+    --black: #000000;
+}
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Video de fondo */
+.bg-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: translate(-50%, -50%);
+    z-index: -2;
+}
+
+/* Overlay oscuro sobre el video */
+.video-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+body {
+    font-family: 'Orbitron', monospace;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    position: relative;
+    background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #000000 100%);
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(68, 68, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -3;
+}
+
+/* Container principal */
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+/* Tarjeta de login */
+.login-card {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--primary-red), var(--gold));
+}
+
+/* Header épico */
+.hero-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.hero-header h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(45deg, var(--gold), var(--light-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: var(--light-blue);
+    font-weight: 400;
+}
+
+/* Botones de tabs */
+.tab-buttons {
+    display: flex;
+    margin-bottom: 30px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 5px;
+    backdrop-filter: blur(10px);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    color: var(--white);
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+    background: var(--gold);
+    color: var(--black);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+}
+
+.tab-btn:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Formularios */
+.form {
+    transition: all 0.3s ease;
+}
+
+.form.hidden {
+    display: none;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--light-blue);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    font-family: 'Orbitron', monospace;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Botón principal */
+.btn-primary {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, var(--gold), var(--primary-red));
+    border: none;
+    border-radius: 10px;
+    color: var(--white);
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(45deg, var(--primary-red), var(--gold));
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Mensajes */
+.message {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 700;
+    display: none;
+}
+
+.message.success {
+    background: rgba(34, 197, 94, 0.2);
+    border: 2px solid #22c55e;
+    color: #22c55e;
+    display: block;
+}
+
+.message.error {
+    background: rgba(239, 68, 68, 0.2);
+    border: 2px solid var(--secondary-red);
+    color: var(--secondary-red);
+    display: block;
+}
+
+/* Animaciones */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.login-card {
+    animation: pulse 2s infinite;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .login-card {
+        padding: 30px 20px;
+    }
+    
+    .hero-header h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Efectos de partículas épicas */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: float 6s infinite linear;
+    box-shadow: 0 0 10px var(--gold);
+}
+
+.particle:nth-child(odd) {
+    background: var(--primary-red);
+    box-shadow: 0 0 10px var(--primary-red);
+    animation-duration: 8s;
+}
+
+.particle:nth-child(3n) {
+    background: var(--secondary-blue);
+    box-shadow: 0 0 10px var(--secondary-blue);
+    animation-duration: 10s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Marco elegante y sutil */
+.elegant-frame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -2;
+}
+
+/* Esquinas elegantes */
+.corner-elegant {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--gold);
+    opacity: 0.9;
+    animation: subtleGlow 4s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+.corner-elegant::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--gold);
+    transform: translate(-50%, -50%);
+    opacity: 0.7;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+.corner-elegant::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: var(--gold);
+    transform: translate(-50%, -50%);
+    opacity: 0.8;
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+}
+
+/* Posiciones de las esquinas */
+.corner-elegant:nth-child(1) {
+    top: 30px;
+    left: 30px;
+}
+
+.corner-elegant:nth-child(2) {
+    top: 30px;
+    right: 30px;
+}
+
+.corner-elegant:nth-child(3) {
+    bottom: 30px;
+    left: 30px;
+}
+
+.corner-elegant:nth-child(4) {
+    bottom: 30px;
+    right: 30px;
+}
+
+/* Líneas sutiles */
+.frame-line {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.7;
+    animation: subtlePulse 3s ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+}
+
+.frame-line:nth-child(5) {
+    top: 70px;
+    left: 30px;
+    width: calc(50% - 60px);
+    height: 1px;
+}
+
+.frame-line:nth-child(6) {
+    top: 70px;
+    right: 30px;
+    width: calc(50% - 60px);
+    height: 1px;
+}
+
+.frame-line:nth-child(7) {
+    top: 30px;
+    left: 70px;
+    width: 1px;
+    height: calc(50% - 60px);
+}
+
+.frame-line:nth-child(8) {
+    bottom: 30px;
+    left: 70px;
+    width: 1px;
+    height: calc(50% - 60px);
+}
+
+/* Animaciones sutiles */
+@keyframes subtleGlow {
+    0%, 100% {
+        opacity: 0.9;
+        box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+    }
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 25px rgba(245, 158, 11, 0.7);
+    }
+}
+
+@keyframes subtlePulse {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 0.9;
+    }
+} 

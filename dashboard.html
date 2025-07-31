@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superhéroes - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header tradicional -->
+    <header class="page-header">
+        <div class="header-wrapper">
+            <div class="logo-section">
+                <h1 class="site-logo">SUPERHÉROES</h1>
+                <p class="site-subtitle">Arena de Batallas Épicas</p>
+            </div>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="#" onclick="navigateTo('characters')" class="nav-link">Personajes</a></li>
+                    <li><a href="#" onclick="navigateTo('teams')" class="nav-link">Equipos</a></li>
+                    <li><a href="battle-arena.html" class="nav-link">Batalla</a></li>
+                </ul>
+            </nav>
+            <div class="user-section">
+                <span class="user-welcome">Bienvenido, <span id="username">Usuario</span></span>
+                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="page-content">
+        <div class="content-wrapper">
+            <!-- Sección de bienvenida -->
+            <section class="welcome-banner">
+                <div class="banner-content">
+                    <h2 class="banner-title">¡Bienvenido a la Arena de Batallas Épicas!</h2>
+                    <p class="banner-text">Prepárate para crear personajes legendarios, formar equipos poderosos y participar en batallas épicas que determinarán el destino del universo.</p>
+                </div>
+            </section>
+
+            <!-- Sección de acciones principales -->
+            <section class="main-actions">
+                <h3 class="section-title">Acciones Principales</h3>
+                <div class="actions-grid">
+                    <article class="action-card">
+                        <div class="card-header">
+                            <div class="card-icon">🦸</div>
+                            <h4>Gestionar Personajes</h4>
+                        </div>
+                        <div class="card-content">
+                            <p>Crea y personaliza héroes y villanos con poderes únicos. Define sus estadísticas, habilidades especiales y características distintivas.</p>
+                            <button class="action-btn" onclick="navigateTo('characters')">Gestionar Personajes</button>
+                        </div>
+                    </article>
+
+                    <article class="action-card">
+                        <div class="card-header">
+                            <div class="card-icon">⚔️</div>
+                            <h4>Constructor de Equipos</h4>
+                        </div>
+                        <div class="card-content">
+                            <p>Forma equipos estratégicos seleccionando exactamente 3 personajes. Combina diferentes tipos para crear sinergias poderosas.</p>
+                            <button class="action-btn" onclick="navigateTo('teams')">Construir Equipos</button>
+                        </div>
+                    </article>
+
+                    <article class="action-card">
+                        <div class="card-header">
+                            <div class="card-icon">🔥</div>
+                            <h4>Arena de Batalla</h4>
+                        </div>
+                        <div class="card-content">
+                            <p>Inicia batallas épicas de 3 rondas. Selecciona tus equipos y lucha en combates estratégicos con efectos visuales impresionantes.</p>
+                            <a href="battle-arena.html" class="action-btn">Entrar a la Arena</a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Sección de estadísticas -->
+            <section class="stats-section">
+                <h3 class="section-title">Estadísticas de tu Cuenta</h3>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="totalCharacters">0</span>
+                            <span class="stat-label">Personajes Creados</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">⚔️</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="totalTeams">0</span>
+                            <span class="stat-label">Equipos Formados</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="footer-wrapper">
+            <p>&copy; 2024 Superhéroes - Arena de Batallas Épicas. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html> 

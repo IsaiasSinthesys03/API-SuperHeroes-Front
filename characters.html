@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superhéroes - Gestión de Personajes</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/characters.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header tradicional -->
+    <header class="page-header">
+        <div class="header-wrapper">
+            <div class="logo-section">
+                <h1 class="site-logo">SUPERHÉROES</h1>
+                <p class="site-subtitle">Arena de Batallas Épicas</p>
+            </div>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="#" onclick="navigateTo('characters')" class="nav-link active">Personajes</a></li>
+                    <li><a href="#" onclick="navigateTo('teams')" class="nav-link">Equipos</a></li>
+                    <li><a href="battle-arena.html" class="nav-link">Batalla</a></li>
+                </ul>
+            </nav>
+            <div class="user-section">
+                <span class="user-welcome">Bienvenido, <span id="username">Usuario</span></span>
+                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="page-content">
+        <div class="content-wrapper">
+            <!-- Banner de título -->
+            <section class="title-banner">
+                <div class="banner-content">
+                    <h2 class="banner-title">GESTIÓN DE PERSONAJES</h2>
+                    <p class="banner-text">Crea y gestiona héroes y villanos épicos con poderes únicos</p>
+                </div>
+            </section>
+
+            <!-- Barra de herramientas -->
+            <section class="tools-section">
+                <div class="tools-container">
+                    <div class="search-section">
+                        <input type="text" id="searchInput" placeholder="Buscar personaje..." class="search-input">
+                        <button class="btn-search" onclick="searchCharacters()">🔍</button>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <select id="typeFilter" class="filter-select" onchange="filterCharacters()">
+                            <option value="all">Todos los personajes</option>
+                            <option value="hero">Solo héroes</option>
+                            <option value="villain">Solo villanos</option>
+                        </select>
+                    </div>
+                    
+                    <div class="action-section">
+                        <button class="btn-volver" onclick="navigateTo('dashboard')">⬅️ VOLVER</button>
+                        <button class="btn-create-hero" onclick="showCreateForm('hero')">🦸 CREAR HÉROE</button>
+                        <button class="btn-create-villain" onclick="showCreateForm('villain')">👿 CREAR VILLANO</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Formulario de creación de personaje -->
+            <section class="create-form-section" id="createForm" style="display: none;">
+                <div class="form-container">
+                    <div class="game-interface">
+                        <!-- Panel izquierdo: Imagen del personaje -->
+                        <div class="character-preview-panel">
+                            <img id="characterPreview" src="" alt="Vista previa del personaje">
+                            <div class="character-navigation">
+                                <button type="button" class="nav-arrow nav-prev" onclick="previousImage()">‹</button>
+                                <button type="button" class="nav-arrow nav-next" onclick="nextImage()">›</button>
+                            </div>
+                        </div>
+
+                        <!-- Panel derecho: Formulario de datos -->
+                        <div class="stats-panel">
+                            <div class="stats-header">
+                                <h3>📊 Estadísticas del Personaje</h3>
+                            </div>
+                            
+                            <form id="characterForm" class="game-form">
+                                <div class="form-section">
+                                    <h4>🎭 Información Básica</h4>
+                                    <div class="form-row">
+                                        <div class="input-group">
+                                            <label for="nombre">Nombre</label>
+                                            <input type="text" id="nombre" required>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="alias">Alias</label>
+                                            <input type="text" id="alias" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="input-group">
+                                            <label for="city">Ciudad</label>
+                                            <input type="text" id="city" required>
+                                        </div>
+                                        <div class="input-group" style="display: none;">
+                                            <label for="team">Skin</label>
+                                            <select id="team">
+                                                <option value="">Selecciona tipo</option>
+                                                <option value="hero">Héroe</option>
+                                                <option value="villain">Villano</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-section">
+                                    <h4>⚔️ Estadísticas de Combate</h4>
+                                    <div class="form-stats-grid">
+                                        <div class="stat-item">
+                                            <div class="stat-header">
+                                                <span class="stat-icon">⚔️</span>
+                                                <span class="stat-label">Poder</span>
+                                                <button type="button" class="stat-upgrade" onclick="upgradeStat('poder')">+</button>
+                                            </div>
+                                            <div class="stat-bar">
+                                                <div class="stat-fill" id="poderBar" style="width: 0%"></div>
+                                            </div>
+                                            <input type="number" id="poder" min="0" max="10" required class="stat-input">
+                                        </div>
+                                        
+                                        <div class="stat-item">
+                                            <div class="stat-header">
+                                                <span class="stat-icon">🛡️</span>
+                                                <span class="stat-label">Defensa</span>
+                                                <button type="button" class="stat-upgrade" onclick="upgradeStat('defensa')">+</button>
+                                            </div>
+                                            <div class="stat-bar">
+                                                <div class="stat-fill" id="defensaBar" style="width: 0%"></div>
+                                            </div>
+                                            <input type="number" id="defensa" min="0" max="10" required class="stat-input">
+                                        </div>
+                                        
+                                        <div class="stat-item">
+                                            <div class="stat-header">
+                                                <span class="stat-icon">⚡</span>
+                                                <span class="stat-label">Especial</span>
+                                                <button type="button" class="stat-upgrade" onclick="upgradeStat('danoHabilidad')">+</button>
+                                            </div>
+                                            <div class="stat-bar">
+                                                <div class="stat-fill" id="danoHabilidadBar" style="width: 0%"></div>
+                                            </div>
+                                            <input type="number" id="danoHabilidad" min="0" max="50" required class="stat-input">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-section">
+                                    <h4>🎯 Habilidades Especiales</h4>
+                                    <div class="skills-grid">
+                                        <div class="skill-item">
+                                            <div class="skill-icon">⚔️</div>
+                                            <div class="skill-info">
+                                                <label for="golpeBasico1">Golpe Básico 1</label>
+                                                <input type="number" id="golpeBasico1" min="0" max="15" required>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <div class="skill-icon">⚔️</div>
+                                            <div class="skill-info">
+                                                <label for="golpeBasico2">Golpe Básico 2</label>
+                                                <input type="number" id="golpeBasico2" min="0" max="15" required>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <div class="skill-icon">⚔️</div>
+                                            <div class="skill-info">
+                                                <label for="golpeBasico3">Golpe Básico 3</label>
+                                                <input type="number" id="golpeBasico3" min="0" max="15" required>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <div class="skill-icon">🎯</div>
+                                            <div class="skill-info">
+                                                <label for="probCrit">Probabilidad Crítica (%)</label>
+                                                <input type="number" id="probCrit" min="0" max="100" required>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <div class="skill-icon">💥</div>
+                                            <div class="skill-info">
+                                                <label for="danoCrit">Daño Crítico (%)</label>
+                                                <input type="number" id="danoCrit" min="0" max="100" required>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <div class="skill-icon">✨</div>
+                                            <div class="skill-info">
+                                                <label for="nombreHabilidad">Nombre Habilidad</label>
+                                                <input type="text" id="nombreHabilidad" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-select-character">🎮 Crear Personaje</button>
+                                    <button type="button" class="btn-cancel" onclick="hideCreateForm()">❌ Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modal Selector de Imágenes -->
+            <div id="imageSelectorModal" class="image-selector-modal hidden">
+                <div class="image-selector-content">
+                    <div class="image-selector-header">
+                        <h3>Selecciona la imagen de tu personaje</h3>
+                        <button type="button" class="btn-close" onclick="closeImageSelector()">×</button>
+                    </div>
+                    <div class="image-grid" id="imageGrid">
+                        <!-- Las imágenes se cargarán dinámicamente aquí -->
+                    </div>
+                    <div class="image-selector-actions">
+                        <button type="button" class="btn-confirm-image" onclick="confirmImageSelection()">
+                            ✅ Confirmar Selección
+                        </button>
+                        <button type="button" class="btn-cancel-image" onclick="closeImageSelector()">
+                            ❌ Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de personajes -->
+            <section class="characters-section">
+                <div class="characters-grid" id="charactersGrid">
+                    <!-- Los personajes se cargarán dinámicamente aquí -->
+                </div>
+
+                <!-- Mensaje de carga -->
+                <div id="loadingMessage" class="loading-message">
+                    <div class="spinner"></div>
+                    <p>Cargando personajes...</p>
+                </div>
+
+                <!-- Mensaje de no hay personajes -->
+                <div id="noCharactersMessage" class="no-characters hidden">
+                    <div class="empty-icon">🦸</div>
+                    <h3>No hay personajes creados</h3>
+                    <p>Crea tu primer héroe o villano para comenzar</p>
+                    <button class="btn-create-first" onclick="showCreateForm('hero')">Crear Primer Personaje</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="footer-wrapper">
+            <p>&copy; 2024 Superhéroes - Arena de Batallas Épicas. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/characters.js"></script>
+</body>
+</html> 

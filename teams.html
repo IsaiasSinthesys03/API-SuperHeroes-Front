@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superhéroes - Constructor de Equipos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/teams.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header tradicional -->
+    <header class="page-header">
+        <div class="header-wrapper">
+            <div class="logo-section">
+                <h1 class="site-logo">SUPERHÉROES</h1>
+                <p class="site-subtitle">Arena de Batallas Épicas</p>
+            </div>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="#" onclick="navigateTo('characters')" class="nav-link">Personajes</a></li>
+                    <li><a href="#" onclick="navigateTo('teams')" class="nav-link active">Equipos</a></li>
+                    <li><a href="battle-arena.html" class="nav-link">Batalla</a></li>
+                </ul>
+            </nav>
+            <div class="user-section">
+                <span class="user-welcome">Bienvenido, <span id="username">Usuario</span></span>
+                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="page-content">
+        <div class="content-wrapper">
+            <!-- Banner de título -->
+            <section class="title-banner">
+                <div class="banner-content">
+                    <h2 class="banner-title">CONSTRUCTOR DE EQUIPOS</h2>
+                    <p class="banner-text">Crea equipos épicos para las batallas más intensas</p>
+                </div>
+            </section>
+
+            <!-- Barra de herramientas -->
+            <section class="tools-section">
+                <div class="tools-container">
+                    <div class="search-section">
+                        <input type="text" id="searchInput" placeholder="Buscar equipo..." class="search-input">
+                        <button class="btn-search" onclick="searchTeams()">🔍</button>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <select id="typeFilter" class="filter-select" onchange="filterTeams()">
+                            <option value="all">Todos los equipos</option>
+                            <option value="heroes">Solo equipos de héroes</option>
+                            <option value="villains">Solo equipos de villanos</option>
+                            <option value="mixed">Equipos mixtos</option>
+                        </select>
+                    </div>
+                    
+                    <div class="action-section">
+                        <button class="btn-volver" onclick="navigateTo('dashboard')">⬅️ VOLVER</button>
+                        <button class="btn-create-team" onclick="showCreateForm()">⚔️ CREAR EQUIPO</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Formulario de creación de equipo -->
+            <section class="create-form-section" id="createForm" style="display: none;">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h3>🏆 Crear Nuevo Equipo</h3>
+                        <button class="btn-close" onclick="hideCreateForm()">✕</button>
+                    </div>
+                    
+                    <form id="teamForm" class="team-form">
+                        <div class="form-section">
+                            <h4>📝 Información del Equipo</h4>
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="teamName">Nombre del Equipo</label>
+                                    <input type="text" id="teamName" required>
+                                </div>
+                                <div class="input-group">
+                                    <label for="teamDescription">Descripción</label>
+                                    <input type="text" id="teamDescription" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h4>🎭 Tipo de Personajes</h4>
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label for="characterType">Seleccionar Tipo</label>
+                                    <select id="characterType" onchange="loadCharactersByType()" required>
+                                        <option value="">Seleccionar tipo</option>
+                                        <option value="hero">Héroes</option>
+                                        <option value="villain">Villanos</option>
+                                        <option value="mixed">Mixto</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h4>⚔️ Seleccionar Personajes (Exactamente 3)</h4>
+                            <div class="characters-selection">
+                                <div id="charactersList" class="characters-grid">
+                                    <!-- Los personajes se cargarán dinámicamente aquí -->
+                                </div>
+                                <div class="selected-characters">
+                                    <h5>Personajes Seleccionados:</h5>
+                                    <div id="selectedCharacters" class="selected-list">
+                                        <!-- Los personajes seleccionados aparecerán aquí -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn-save">💾 Guardar Equipo</button>
+                            <button type="button" class="btn-cancel" onclick="hideCreateForm()">❌ Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Lista de equipos -->
+            <section class="teams-section">
+                <div class="teams-grid" id="teamsGrid">
+                    <!-- Los equipos se cargarán dinámicamente aquí -->
+                </div>
+
+                <!-- Mensaje de carga -->
+                <div id="loadingMessage" class="loading-message">
+                    <div class="spinner"></div>
+                    <p>Cargando equipos...</p>
+                </div>
+
+                <!-- Mensaje de no hay equipos -->
+                <div id="noTeamsMessage" class="no-teams hidden">
+                    <div class="empty-icon">⚔️</div>
+                    <h3>No hay equipos creados</h3>
+                    <p>Crea tu primer equipo para comenzar las batallas</p>
+                    <button class="btn-create-first" onclick="showCreateForm()">Crear Primer Equipo</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer tradicional -->
+    <footer class="page-footer">
+        <div class="footer-content">
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Superhéroes Arena. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/teams.js"></script>
+</body>
+</html> 
