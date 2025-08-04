@@ -9,6 +9,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Video de fondo -->
+    <video autoplay muted loop id="bgVideo" class="bg-video">
+        <source src="image/V03.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento video.
+    </video>
+    
+    <!-- Overlay oscuro -->
+    <div class="video-overlay"></div>
+    
+    <!-- Botón para alternar video de fondo (debug) -->
+    <button id="toggleVideoBtn" style="position: fixed; top: 10px; left: 10px; z-index: 9999; background: rgba(0,0,0,0.7); color: white; border: 1px solid white; padding: 5px; cursor: pointer;">Toggle Video</button>
+    
     <!-- Header -->
     <header class="battle-header">
         <div class="header-content">
@@ -110,14 +122,15 @@
 
                 <!-- Campo de Batalla -->
                 <div class="battle-arena">
-                    <!-- Jugador 1 (Izquierda) -->
-                    <div class="player-side left">
-                        <div class="player-info">
-                            <h3 id="player1Title">Jugador 1</h3>
-                            <div class="character-battle">
-                                <div class="character-avatar" id="player1Avatar">
-                                    <div class="avatar-shape hero-shape"></div>
-                                </div>
+                    <!-- Contenedor para Jugador 1 y su carta -->
+                    <div class="player-battle-row">
+                        <!-- Imagen del Personaje Jugador 1 (DIRECTA) -->
+                        <img id="player1Image" src="" alt="Personaje Jugador 1" style="width: 120px; height: 500px; object-fit: cover; object-position: center; border: 2px solid var(--battle-gold); border-radius: 15px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); transform: scale(1.2);">
+                        
+                        <!-- Jugador 1 (Derecha) -->
+                        <div class="player-side left">
+                            <div class="player-info">
+                                <h3 id="player1Title">Jugador 1</h3>
                                 <div class="character-stats">
                                     <h4 id="player1Name"></h4>
                                     <div class="health-bar">
@@ -126,20 +139,36 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="player-actions">
-                            <button class="btn-attack" id="player1AttackBtn">
-                                ⚔️ ATACAR
-                            </button>
-                            <button class="btn-special" id="player1SpecialBtn" disabled>
-                                🔥 USAR HABILIDAD
-                            </button>
-                        </div>
-                        
-                        <div class="combo-bar">
-                            <div class="combo-fill" id="player1Combo" style="width: 0%"></div>
-                            <span class="combo-text">Combo: 0/3</span>
+                            
+                            <!-- Contenedor de botones -->
+                            <div class="player-actions">
+                                <button class="btn-attack" id="player1AttackBtn">
+                                    ⚔️ ATACAR
+                                </button>
+                                <button class="btn-special" id="player1SpecialBtn" disabled>
+                                    🔥 USAR HABILIDAD
+                                </button>
+                            </div>
+                            
+                            <div class="combo-bar">
+                                <div class="combo-fill" id="player1Combo" style="width: 0%"></div>
+                                <span class="combo-text">Combo: 0/3</span>
+                            </div>
+                            
+                            <!-- GIF del Personaje Jugador 1 -->
+                            <div class="character-gif-container left">
+                                <img id="player1Gif" class="character-gif" src="" alt="Personaje Jugador 1" style="display: none;">
+                            </div>
+                            
+                            <!-- Animación de golpe para Jugador 1 -->
+                            <div id="hitAnimationPlayer1" class="hit-animation player1-hit" style="display: none;">
+                                <img src="./golpes/G01.gif" alt="Golpe" class="hit-gif">
+                            </div>
+                            
+                            <!-- Animación de habilidad para Jugador 1 -->
+                            <div id="skillAnimationPlayer1" class="hit-animation player1-hit" style="display: none;">
+                                <img src="./golpes/G02.gif" alt="Habilidad" class="hit-gif">
+                            </div>
                         </div>
                     </div>
 
@@ -154,37 +183,54 @@
                         </div>
                     </div>
 
-                    <!-- Jugador 2 (Derecha) -->
-                    <div class="player-side right">
-                        <div class="player-info">
-                            <h3 id="player2Title">Jugador 2</h3>
-                            <div class="character-battle">
-                                <div class="character-avatar" id="player2Avatar">
-                                    <div class="avatar-shape villain-shape"></div>
-                                </div>
+                    <!-- Contenedor para Jugador 2 y su carta -->
+                    <div class="player-battle-row">
+                        <!-- Jugador 2 (Izquierda) -->
+                        <div class="player-side right">
+                            <div class="player-info">
+                                <h3 id="player2Title">Jugador 2</h3>
                                 <div class="character-stats">
-                                    <h4 id="player2Name">StarDeath</h4>
+                                    <h4 id="player2Name"></h4>
                                     <div class="health-bar">
                                         <div class="health-fill" id="player2Health" style="width: 100%"></div>
                                         <span class="health-text" id="player2HealthText">200/200</span>
                                     </div>
                                 </div>
                             </div>
+                            
+                            <!-- Contenedor de botones -->
+                            <div class="player-actions">
+                                <button class="btn-attack" id="player2AttackBtn">
+                                    ⚔️ ATACAR
+                                </button>
+                                <button class="btn-special" id="player2SpecialBtn" disabled>
+                                    🔥 USAR HABILIDAD
+                                </button>
+                            </div>
+                            
+                            <div class="combo-bar">
+                                <div class="combo-fill" id="player2Combo" style="width: 0%"></div>
+                                <span class="combo-text">Combo: 0/3</span>
+                            </div>
+                            
+                            <!-- GIF del Personaje Jugador 2 -->
+                            <div class="character-gif-container right">
+                                <img id="player2Gif" class="character-gif" src="" alt="Personaje Jugador 2" style="display: none;">
+                            </div>
+                            
+                            <!-- Animación de golpe para Jugador 2 -->
+                            <div id="hitAnimationPlayer2" class="hit-animation player2-hit" style="display: none;">
+                                <img src="./golpes/G01.gif" alt="Golpe" class="hit-gif">
+                            </div>
+                            
+                            <!-- Animación de habilidad para Jugador 2 -->
+                            <div id="skillAnimationPlayer2" class="hit-animation player2-hit" style="display: none;">
+                                <img src="./golpes/G02.gif" alt="Habilidad" class="hit-gif">
+                            </div>
                         </div>
                         
-                        <div class="player-actions">
-                            <button class="btn-attack" id="player2AttackBtn">
-                                ⚔️ ATACAR
-                            </button>
-                            <button class="btn-special" id="player2SpecialBtn" disabled>
-                                🔥 USAR HABILIDAD
-                            </button>
-                        </div>
-                        
-                        <div class="combo-bar">
-                            <div class="combo-fill" id="player2Combo" style="width: 0%"></div>
-                            <span class="combo-text">Combo: 0/3</span>
-                        </div>
+                        <!-- Imagen del Personaje Jugador 2 (DIRECTA) -->
+                        <img id="player2Image" src="" alt="Personaje Jugador 2" style="width: 120px; height: 500px; object-fit: cover; object-position: center; border: 2px solid var(--battle-gold); border-radius: 15px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); transform: scale(1.2);">
                     </div>
                 </div>
             </div>
@@ -199,19 +245,21 @@
                 
                 <div class="result-content">
                     <div class="winner-side" id="winnerSide">
-                        <div class="winner-avatar">
-                            <div class="avatar-shape winner-shape"></div>
+                        <div class="winner-card-container">
+                            <!-- Card del ganador se insertará aquí -->
                         </div>
-                        <h3 id="winnerName">StarLight</h3>
-                        <p class="winner-message" id="winnerMessage">¡VICTORIA!</p>
+                        <div class="winner-badge">
+                            <span class="winner-text">🏆 VICTORIA</span>
+                        </div>
                     </div>
                     
                     <div class="loser-side" id="loserSide">
-                        <div class="loser-avatar">
-                            <div class="avatar-shape loser-shape"></div>
+                        <div class="loser-card-container">
+                            <!-- Card del perdedor se insertará aquí -->
                         </div>
-                        <h3 id="loserName">StarDeath</h3>
-                        <p class="loser-message" id="loserMessage">DERROTA</p>
+                        <div class="loser-badge">
+                            <span class="loser-text">💀 DERROTA</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -238,14 +286,23 @@
                     <div class="round-summary" id="round1Summary">
                         <h4>Round 1</h4>
                         <p id="round1Result">Ganador: Jugador 1</p>
+                        <div class="round-winner-card" id="round1WinnerCard">
+                            <!-- Card del ganador del Round 1 se insertará aquí -->
+                        </div>
                     </div>
                     <div class="round-summary" id="round2Summary">
                         <h4>Round 2</h4>
                         <p id="round2Result">Ganador: Jugador 2</p>
+                        <div class="round-winner-card" id="round2WinnerCard">
+                            <!-- Card del ganador del Round 2 se insertará aquí -->
+                        </div>
                     </div>
                     <div class="round-summary" id="round3Summary">
                         <h4>Round 3</h4>
                         <p id="round3Result">Ganador: Jugador 1</p>
+                        <div class="round-winner-card" id="round3WinnerCard">
+                            <!-- Card del ganador del Round 3 se insertará aquí -->
+                        </div>
                     </div>
                 </div>
                 
@@ -262,8 +319,65 @@
     </main>
 
     <!-- Scripts -->
+    <script>
+        // Debug del video de fondo
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('bgVideo');
+            const overlay = document.querySelector('.video-overlay');
+            const toggleBtn = document.getElementById('toggleVideoBtn');
+            
+            console.log('Battle Arena: Verificando video de fondo...');
+            console.log('Video element:', video);
+            console.log('Overlay element:', overlay);
+            
+            if (video) {
+                console.log('Video src:', video.querySelector('source').src);
+                console.log('Video readyState:', video.readyState);
+                console.log('Video networkState:', video.networkState);
+                
+                video.addEventListener('loadstart', () => console.log('Battle Arena: Video loadstart'));
+                video.addEventListener('loadeddata', () => console.log('Battle Arena: Video loadeddata'));
+                video.addEventListener('canplay', () => console.log('Battle Arena: Video canplay'));
+                video.addEventListener('playing', () => console.log('Battle Arena: Video playing'));
+                video.addEventListener('error', (e) => console.error('Battle Arena: Video error:', e));
+                
+                // Verificar si el video está visible
+                const videoStyle = window.getComputedStyle(video);
+                console.log('Video display:', videoStyle.display);
+                console.log('Video visibility:', videoStyle.visibility);
+                console.log('Video z-index:', videoStyle.zIndex);
+                console.log('Video position:', videoStyle.position);
+            }
+            
+            if (overlay) {
+                const overlayStyle = window.getComputedStyle(overlay);
+                console.log('Overlay display:', overlayStyle.display);
+                console.log('Overlay visibility:', overlayStyle.visibility);
+                console.log('Overlay z-index:', overlayStyle.zIndex);
+                console.log('Overlay background:', overlayStyle.background);
+            }
+            
+            // Botón para alternar video
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function() {
+                    if (video) {
+                        if (video.style.display === 'none') {
+                            video.style.display = 'block';
+                            overlay.style.display = 'block';
+                            toggleBtn.textContent = 'Ocultar Video';
+                        } else {
+                            video.style.display = 'none';
+                            overlay.style.display = 'none';
+                            toggleBtn.textContent = 'Mostrar Video';
+                        }
+                    }
+                });
+            }
+        });
+    </script>
     <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/battle-arena.js"></script>
+    <script src="js/background-music.js"></script>
 </body>
 </html> 

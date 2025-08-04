@@ -1686,3 +1686,43 @@ body {
         font-size: 0.5rem;
     }
 } 
+
+/* Estilos para video de fondo */
+.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.6;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Optimizaciones para mejor rendimiento */
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    pointer-events: none;
+    /* Asegurar que cubra toda la pantalla */
+    min-width: 100vw;
+    min-height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+} 

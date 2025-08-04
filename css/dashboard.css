@@ -162,12 +162,16 @@ body {
     margin-top: 60px;
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 3;
 }
 
 .content-wrapper {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    position: relative;
+    z-index: 4;
 }
 
 /* Banner de bienvenida */
@@ -180,6 +184,7 @@ body {
     text-align: center;
     position: relative;
     overflow: hidden;
+    z-index: 4;
 }
 
 .welcome-banner::before {
@@ -211,6 +216,8 @@ body {
 /* Sección de acciones principales */
 .main-actions {
     margin-bottom: 50px;
+    position: relative;
+    z-index: 4;
 }
 
 .section-title {
@@ -313,6 +320,8 @@ body {
     border: 2px solid var(--gold);
     border-radius: 15px;
     padding: 30px;
+    position: relative;
+    z-index: 5;
 }
 
 .stats-container {
@@ -458,4 +467,44 @@ body {
         text-align: center;
         gap: 10px;
     }
+} 
+
+/* Estilos para video de fondo */
+.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.6;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Optimizaciones para mejor rendimiento */
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    pointer-events: none;
+    /* Asegurar que cubra toda la pantalla */
+    min-width: 100vw;
+    min-height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
 } 

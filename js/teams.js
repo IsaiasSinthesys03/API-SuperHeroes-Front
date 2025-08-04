@@ -80,14 +80,19 @@ function debounce(func, wait) {
 async function loadTeams() {
     try {
         showLoading(true);
+        console.log('Iniciando carga de equipos...');
         
         const teams = await apiCall('/equipos', { method: 'GET' });
         console.log('Raw teams data from API:', teams);
         
         allTeams = teams;
         filteredTeams = [...allTeams];
+        console.log('Equipos cargados:', allTeams.length);
+        console.log('Equipos filtrados:', filteredTeams.length);
+        
         renderTeams();
         showLoading(false);
+        console.log('Carga de equipos completada');
         
     } catch (error) {
         console.error('Error cargando equipos:', error);
@@ -357,8 +362,19 @@ function hideCreateForm() {
     const form = document.getElementById('createForm');
     form.style.display = 'none';
     
-    // Limpiar variables
+    // Limpiar variables y formularios
     selectedCharacters = [];
+    document.getElementById('teamForm').reset();
+    document.getElementById('charactersList').innerHTML = '';
+    document.getElementById('selectedCharacters').innerHTML = '';
+    
+    // Limpiar filtros
+    document.getElementById('searchInput').value = '';
+    document.getElementById('typeFilter').value = 'all';
+    
+    // Recargar la lista de equipos sin filtros
+    filteredTeams = [...allTeams];
+    renderTeams();
 }
 
 // Cargar personajes por tipo
@@ -555,9 +571,18 @@ async function handleTeamSubmit(event) {
         });
         showMessage('Equipo creado exitosamente', 'success');
         
+        // Limpiar formulario y variables
+        selectedCharacters = [];
+        document.getElementById('teamForm').reset();
+        document.getElementById('charactersList').innerHTML = '';
+        document.getElementById('selectedCharacters').innerHTML = '';
+        
         // Recargar equipos y ocultar formulario
+        console.log('Recargando equipos después de crear nuevo equipo...');
         await loadTeams();
+        console.log('Equipos recargados, ocultando formulario...');
         hideCreateForm();
+        console.log('Formulario ocultado, proceso completado');
         
     } catch (error) {
         console.error('Error guardando equipo:', error);
